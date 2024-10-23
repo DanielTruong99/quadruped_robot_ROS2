@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot name="acs_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find robot_description)/robot/parts/base/base.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/parts/base/base.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/parts/leg_joint/leg_joint.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/parts/left_thigh/left_thigh.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/parts/right_thigh/right_thigh.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/parts/shin/shin.xacro"/>
+  <xacro:include filename="$(find robot_description)/robot/robot_control_gazebo.xacro"/>
+  <xacro:property name="PI" value="3.14159274"/>
+
+  <!-- =============== Link & Joint =============== -->
+  <!-- Base -->
+  <link name="base_footprint"/>
+  <xacro:base parent="base_footprint">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:base>
+
+  <xacro:leg_joint_v0 prefix="rear_left" parent="base_link">
+    <origin xyz="-0.277 0.06 0.089405" rpy="0 ${PI/2} ${-PI/2}"/>  
+    <axis xyz="0 -1 0"/> <!-- 0 -1 0 -->
+  </xacro:leg_joint_v0>
+
+  <xacro:leg_joint_v0 prefix="rear_right" parent="base_link">
+    <origin xyz="-0.277 -0.06 0.089405" rpy="0 ${-PI/2} ${-PI/2}"/> 
+    <axis xyz="0 1 0"/>
+  </xacro:leg_joint_v0>
+
+  <xacro:leg_joint_v0 prefix="front_left" parent="base_link">
+    <origin xyz="0.282 0.06 0.090255" rpy="0 ${PI/2} ${-PI/2}"/> 
+    <axis xyz="0 -1 0"/> <!-- 0 -1 0 -->
+  </xacro:leg_joint_v0>
+
+  <xacro:leg_joint_v0 prefix="front_right" parent="base_link">
+    <origin xyz="0.282 -0.06 0.090255" rpy="0 ${-PI/2} ${-PI/2}"/> 
+    <axis xyz="0 1 0"/>
+  </xacro:leg_joint_v0>
+
+  <xacro:left_thigh_v0 prefix="front" parent="front_left_leg_joint_link">
+    <origin xyz="0 0 -0.114" rpy="${PI/2} 0 ${-PI/2}"/>
+    <axis xyz="0 1 0"/>
+  </xacro:left_thigh_v0>
+
+  <xacro:left_thigh_v0 prefix="rear" parent="rear_left_leg_joint_link">
+    <origin xyz="0 0 -0.114" rpy="${PI/2} 0 ${-PI/2}"/>
+    <axis xyz="0 1 0"/>
+  </xacro:left_thigh_v0>
+  
+  <xacro:right_thigh_v0 prefix="front" parent="front_right_leg_joint_link">
+    <origin xyz="0 0 -0.114" rpy="${PI/2} 0 ${-PI/2}"/>
+    <axis xyz="0 -1 0"/> <!-- 0 -1 0 -->
+  </xacro:right_thigh_v0>
+
+  <xacro:right_thigh_v0 prefix="rear" parent="rear_right_leg_joint_link">
+    <origin xyz="0 0 -0.114" rpy="${PI/2} 0 ${-PI/2}"/>
+    <axis xyz="0 -1 0"/> <!-- 0 -1 0 -->
+  </xacro:right_thigh_v0>
+
+  <xacro:shin_v0 prefix="front_left" parent="front_left_thigh_link">
+    <origin xyz="0.426 -0.0285 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </xacro:shin_v0>
+
+  <xacro:shin_v0 prefix="front_right" parent="front_right_thigh_link">
+    <origin xyz="0.426 -0.0285 0" rpy="${PI} 0 0"/>
+    <axis xyz="0 1 0"/>
+  </xacro:shin_v0>
+
+  <xacro:shin_v0 prefix="rear_left" parent="rear_left_thigh_link">
+    <origin xyz="0.426 -0.0285 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </xacro:shin_v0>
+
+  <xacro:shin_v0 prefix="rear_right" parent="rear_right_thigh_link">
+    <origin xyz="0.426 -0.0285 0" rpy="${PI} 0 0"/>
+    <axis xyz="0 1 0"/>
+  </xacro:shin_v0>
+
+  <!-- =============== Gazebo =============== -->
+  <!-- Controllers -->
+  <xacro:robot_ros2_control/>
+  
+  <!-- Base -->
+  <xacro:base_gazebo_v0/>
+  <xacro:leg_joint_gazebo_v0 prefix="rear_left"/>
+  <xacro:leg_joint_gazebo_v0 prefix="front_left"/>
+  <xacro:leg_joint_gazebo_v0 prefix="rear_right"/>
+  <xacro:leg_joint_gazebo_v0 prefix="front_right"/>
+  <xacro:left_thigh_gazebo_v0 prefix="front"/>
+  <xacro:left_thigh_gazebo_v0 prefix="rear"/>
+  <xacro:right_thigh_gazebo_v0 prefix="front"/>
+  <xacro:right_thigh_gazebo_v0 prefix="rear"/> 
+  <xacro:shin_gazebo_v0 prefix="rear_left"/>
+  <xacro:shin_gazebo_v0 prefix="front_left"/>
+  <xacro:shin_gazebo_v0 prefix="rear_right"/>
+  <xacro:shin_gazebo_v0 prefix="front_right"/>
+
+
+</robot>
